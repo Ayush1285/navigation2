@@ -24,6 +24,7 @@
 #include <vector>
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 #include "angles/angles.h"
 

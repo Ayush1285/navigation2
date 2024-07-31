@@ -16,6 +16,7 @@
 #define NAV2_MPPI_CONTROLLER__MODELS__STATE_HPP_
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 #include <geometry_msgs/msg/pose_stamped.hpp>
 #include <geometry_msgs/msg/twist.hpp>
@@ -30,13 +31,8 @@ namespace mppi::models
  */
 struct State
 {
-  Eigen::ArrayXXf vx;
-  Eigen::ArrayXXf vy;
-  Eigen::ArrayXXf wz;
-
-  Eigen::ArrayXXf cvx;
-  Eigen::ArrayXXf cvy;
-  Eigen::ArrayXXf cwz;
+  Eigen::Tensor<float, 3> velocities;
+  Eigen::Tensor<float, 3> controls;
 
   geometry_msgs::msg::PoseStamped pose;
   geometry_msgs::msg::Twist speed;
@@ -46,13 +42,8 @@ struct State
     */
   void reset(unsigned int batch_size, unsigned int time_steps)
   {
-    vx = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    vy = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    wz = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-
-    cvx = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    cvy = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    cwz = Eigen::ArrayXXf::Zero(batch_size, time_steps);
+    velocities.resize({batch_size, time_steps, 3});
+    controls.resize({batch_size, time_steps, 3});
   }
 };
 }  // namespace mppi::models

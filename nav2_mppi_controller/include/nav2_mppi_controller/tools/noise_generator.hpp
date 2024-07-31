@@ -23,6 +23,7 @@
 #include <random>
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 #include "nav2_mppi_controller/models/optimizer_settings.hpp"
 #include "nav2_mppi_controller/tools/parameters_handler.hpp"
@@ -98,9 +99,7 @@ protected:
    */
   void generateNoisedControls();
 
-  Eigen::ArrayXXf noises_vx_;
-  Eigen::ArrayXXf noises_vy_;
-  Eigen::ArrayXXf noises_wz_;
+  Eigen::Tensor<float, 3> noises;
 
   inline static std::default_random_engine generator_;
 

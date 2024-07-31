@@ -16,6 +16,7 @@
 #define NAV2_MPPI_CONTROLLER__MODELS__TRAJECTORIES_HPP_
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 namespace mppi::models
 {
@@ -26,18 +27,14 @@ namespace mppi::models
  */
 struct Trajectories
 {
-  Eigen::ArrayXXf x;
-  Eigen::ArrayXXf y;
-  Eigen::ArrayXXf yaws;
+  Eigen::Tensor<float, 3> trajectories;
 
   /**
     * @brief Reset state data
     */
   void reset(unsigned int batch_size, unsigned int time_steps)
   {
-    x = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    y = Eigen::ArrayXXf::Zero(batch_size, time_steps);
-    yaws = Eigen::ArrayXXf::Zero(batch_size, time_steps);
+    trajectories.resize({batch_size, time_steps, 3});
   }
 };
 

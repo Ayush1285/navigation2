@@ -16,6 +16,7 @@
 #define NAV2_MPPI_CONTROLLER__MODELS__PATH_HPP_
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 namespace mppi::models
 {
@@ -26,18 +27,14 @@ namespace mppi::models
  */
 struct Path
 {
-  Eigen::ArrayXf x;
-  Eigen::ArrayXf y;
-  Eigen::ArrayXf yaws;
+  Eigen::Tensor<float, 3> path;
 
   /**
     * @brief Reset path data
     */
   void reset(unsigned int size)
   {
-    x = Eigen::ArrayXf::Zero(size);
-    y = Eigen::ArrayXf::Zero(size);
-    yaws = Eigen::ArrayXf::Zero(size);
+    path.resize({size, 1, 3})
   }
 };
 

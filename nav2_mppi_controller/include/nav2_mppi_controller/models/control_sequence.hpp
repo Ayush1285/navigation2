@@ -16,6 +16,7 @@
 #define NAV2_MPPI_CONTROLLER__MODELS__CONTROL_SEQUENCE_HPP_
 
 #include <Eigen/Dense>
+#include <Eigen/CXX11/Tensor>
 
 namespace mppi::models
 {
@@ -35,15 +36,11 @@ struct Control
  */
 struct ControlSequence
 {
-  Eigen::ArrayXf vx;
-  Eigen::ArrayXf vy;
-  Eigen::ArrayXf wz;
+  Eigen::Tensor<float, 3> controlSequence;
 
   void reset(unsigned int time_steps)
   {
-    vx = Eigen::ArrayXf::Zero(time_steps);
-    vy = Eigen::ArrayXf::Zero(time_steps);
-    wz = Eigen::ArrayXf::Zero(time_steps);
+    controlSequence.resize({time_steps, 1, 3});
   }
 };
 
